@@ -116,11 +116,11 @@ def Send_Cube(name="default",pos=[0,0,0],size=[1,1,1]):
 
         Start_Model(name,pos)
 
-        link = LINK_SDF("cube",name,pos,size)
+        link = LINK_SDF("box",name,pos,size)
 
         links.append(link)
     else:
-        link = LINK_URDF("cube",name,pos,size)
+        link = LINK_URDF(name,pos,size)
 
         links.append(link)
 
