@@ -10,9 +10,9 @@ p.setAdditionalSearchPath(pybullet_data.getDataPath()) # so plane.urdf resolves
 p.setGravity(0, 0, -9.8)
 
 plane_id = p.loadURDF("plane.urdf")                   # floor
-p.loadSDF("box.sdf")                                  # generated box
+p.loadSDF("boxes.sdf")                                  # generated box
 
-# optional: settle the scene a bit
+# settle the scene a bit
 p.setRealTimeSimulation(0)
 
 #run 1000 simulation steps
