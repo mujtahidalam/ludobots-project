@@ -20,9 +20,14 @@ URDF_FILETYPE = 1
 
 NNDF_FILETYPE   = 2
 
+filetype = None
+
 # global availableLinkIndex
 
 # global linkNamesToIndices
+
+
+
 
 def End():
 
@@ -120,7 +125,7 @@ def Send_Cube(name="default",pos=[0,0,0],size=[1,1,1]):
 
         links.append(link)
     else:
-        link = LINK_URDF("cube",name,pos,size)
+        link = LINK_URDF(name,pos,size)  # Fixed: removed "cube" argument
 
         links.append(link)
 

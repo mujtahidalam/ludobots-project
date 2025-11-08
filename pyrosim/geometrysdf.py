@@ -1,57 +1,57 @@
 from pyrosim.commonFunctions import Save_Whitespace
 
-class GEOMETRY_SDF: 
+# pyrosim/geometrysdf.py
+class GEOMETRY_SDF:
+    def __init__(self, shape, size=None, radius=None, length=None):
+        # normalize + alias
+        shape = (shape or "").lower()
+        if shape == "cube":
+            shape = "box"
 
-    def __init__(self,type,size):
+        self.shape = shape
 
-        self.depth   = 4
+        if shape == "box":
+            L, W, H = size
+            self.string1 = (
+                "      <geometry>\n"
+                "        <box>\n"
+                f"          <size>{L} {W} {H}</size>"
+            )
+            self.string2 = (
+                "\n"
+                "        </box>\n"
+                "      </geometry>"
+            )
 
-        self.string1 = '<geometry>'
+        elif shape == "sphere":
+            r = radius
+            self.string1 = (
+                "      <geometry>\n"
+                "        <sphere>\n"
+                f"          <radius>{r}</radius>"
+            )
+            self.string2 = (
+                "\n"
+                "        </sphere>\n"
+                "      </geometry>"
+            )
 
-        if type == 'box':
+        elif shape == "cylinder":
+            r, L = radius, length
+            self.string1 = (
+                "      <geometry>\n"
+                "        <cylinder>\n"
+                f"          <radius>{r}</radius>\n"
+                f"          <length>{L}</length>"
+            )
+            self.string2 = (
+                "\n"
+                "        </cylinder>\n"
+                "      </geometry>"
+            )
+        else:
+            raise ValueError(f"Unknown geometry shape: {shape}")
 
-            sizeString = str(size[0]) + " " + str(size[1]) + " " + str(size[2])
-
-        elif type == 'sphere':
-
-            radiusString = str(size)
-
-        if type == 'box':
-
-            self.string2 = '   <box>'
-
-            self.string3 = '      <size>' + sizeString + '</size>'
-
-            self.string4 = '   </box>'
-
-        elif type == 'sphere':
-
-            self.string2 = '   <sphere>'
-
-            self.string3 = '      <radius>' + radiusString + '</radius>'
-
-            self.string4 = '   </sphere>'
-
-        self.string5 = '</geometry>'
-
-    def Save(self,f):
-
-        Save_Whitespace(self.depth,f)
-
-        f.write( self.string1 + '\n' )
-
-        Save_Whitespace(self.depth,f)
-
-        f.write( self.string2 + '\n' )
-
-        Save_Whitespace(self.depth,f)
-
-        f.write( self.string3 + '\n' )
-
-        Save_Whitespace(self.depth,f)
-
-        f.write( self.string4 + '\n' )
-
-        Save_Whitespace(self.depth,f)
-
-        f.write( self.string5 + '\n' )
+    def Save(self, f):
+        f.write(self.string1 + "\n")
+        f.write(self.string2 + "\n")
