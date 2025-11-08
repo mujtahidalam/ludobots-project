@@ -1,10 +1,19 @@
+# simulate.py
+import time
 import pybullet as p
-import time 
+import pybullet_data
 
-#connect the pysics server with GUI
-physicsClient = p.connect(p.GUI)
+physicsClient = p.connect(p.GUI)                          # open GUI
+p.setAdditionalSearchPath(pybullet_data.getDataPath()) # so plane.urdf resolves
 
-p.loadSDF("box.sdf")
+
+p.setGravity(0, 0, -9.8)
+
+plane_id = p.loadURDF("plane.urdf")                   # floor
+p.loadSDF("box.sdf")                                  # generated box
+
+# optional: settle the scene a bit
+p.setRealTimeSimulation(0)
 
 #run 1000 simulation steps
 for i in range (1000):
